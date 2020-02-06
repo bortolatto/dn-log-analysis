@@ -6,7 +6,7 @@ import com.dn.service.LogAnalyser;
 import java.util.regex.Pattern;
 
 public class DocumentCommand extends PatternCommand {
-    private static final String REGEX = ".+\\[(WorkerThread-\\d+)\\].+Executing request startRendering.+\\[(\\d+).+(\\d+)\\]";
+    private static final String REGEX = "^(?<occurredAt>.{23}).+\\[(?<documentId>\\d+),\\s(?<documentPage>\\d)\\]";
 
     public DocumentCommand(PatternCommand nextCommand) {
         super(nextCommand);
@@ -15,7 +15,9 @@ public class DocumentCommand extends PatternCommand {
 
     @Override
     void process(LogAnalyser logAnalyser) {
-        Document document = new Document(Integer.parseInt(matcher.group(2)), Integer.parseInt(matcher.group(3)), matcher.group(1));
+        Document document = new Document(Integer.parseInt(matcher.group("documentId")),
+                Integer.parseInt(matcher.group("documentPage")),
+                matcher.group("occurredAt"));
         logAnalyser.setCurrentDocument(document);
     }
 }

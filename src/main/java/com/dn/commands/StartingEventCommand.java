@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 import static com.dn.model.XEvent.EventType;
 
 public class StartingEventCommand extends PatternCommand implements EventBuilder {
-    private static final String REGEX = "(\\d{4}-\\d{2}-\\d{2}\\s\\d{2}:\\d{2}:\\d{2},\\d+)\\s\\[(WorkerThread-\\d+)\\].+startRendering returned\\s(\\d{13}-\\d+)";
+    private static final String REGEX = "^(?<occurredAt>.{23}).+startRendering.+(?<uid>\\d{13}-\\d+)$";
 
     public StartingEventCommand(PatternCommand nextCommand) {
         super(nextCommand);
@@ -20,13 +20,13 @@ public class StartingEventCommand extends PatternCommand implements EventBuilder
 
     @Override
     void process(LogAnalyser logAnalyser) {
-        logAnalyser.getEventRenderings().add(new Rendering(logAnalyser.getCurrentDocument(), matcher.group(3)));
+        logAnalyser.getEventRenderings().add(new Rendering(logAnalyser.getCurrentDocument(), matcher.group(2)));
     }
 
     @Override
     public XEvent build(String line) {
         matches(line);
-        return new XEvent(EventType.START_RENDERING, matcher.group(1), matcher.group(3));
+        return new XEvent(EventType.START_RENDERING, matcher.group("occurredAt"), matcher.group("uid"));
     }
 
     @Override
