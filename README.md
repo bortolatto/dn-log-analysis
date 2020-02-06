@@ -1,7 +1,7 @@
 # Overview
 
-This tool aims to analyze logs with an specific format and to extract several pieces of information from it, such as how many events have occurred and the timestamps that it happened.
-For testing purposes, please download file from http://debreuck.neirynck.com/opdracht/server.zip.
+This tool aims to analyze logs with a specific format and to extract several pieces of information from it, such as how many events have occurred and the timestamps that it happened.
+For testing purposes, please download the file from http://debreuck.neirynck.com/opdracht/server.zip.
 
 # Pre requisites
 *  JDK 11 or later
