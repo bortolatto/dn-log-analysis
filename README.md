@@ -20,7 +20,7 @@ Just run the application with the file log argument:
 java -jar log-analysis-1.0-SNAPSHOT.jar <filename> (without <> characters)
 ```
 
-You should see the progress of analysis:
+You should see the progress of the analysis:
 ```
 14:41:43.931 [main] INFO  Application - Reading file /Users/bortolatto/Downloads/server.log
 14:41:44.134 [main] INFO  Application - Scanning file...
