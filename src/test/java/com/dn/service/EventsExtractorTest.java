@@ -1,9 +1,9 @@
 package com.dn.service;
 
 import com.dn.commands.DocumentCommand;
+import com.dn.commands.GetEventBuilder;
 import com.dn.commands.StartingEventCommand;
-import com.dn.model.Document;
-import com.dn.model.Rendering;
+import com.dn.model.XEvent;
 import org.assertj.core.api.Assertions;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -14,7 +14,7 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Objects;
 
-public class LogAnalyserTest {
+public class EventsExtractorTest {
     private static DocumentCommand documentCommand;
     private static Path path;
 
@@ -27,22 +27,28 @@ public class LogAnalyserTest {
     }
 
     @Test
-    public void shouldHaveOneRendering() throws IOException {
+    public void shouldExtractStartRenderingEventsFromLog() throws IOException {
         LogAnalyser logAnalyser = new LogAnalyser(path, documentCommand);
         List<String> logFile = logAnalyser.readLog();
-        logAnalyser.scan(logFile);
 
-        Document document = new Document(114466, 0, "WorkerThread-17");
-        Rendering rendering = new Rendering(document, "1286373785873-3536");
+        EventsExtractor eventsExtractor = new EventsExtractor(new StartingEventCommand(null));
+        eventsExtractor.process(logFile);
+        List<XEvent> xEvents = eventsExtractor.getEvents().get("1286373785873-3536");
 
-        Assertions.assertThat(logAnalyser.getEventRenderings()).contains(rendering);
+        Assertions.assertThat(xEvents.size()).isEqualTo(1);
+        Assertions.assertThat(xEvents.get(0).getType()).isEqualTo(XEvent.EventType.START_RENDERING);
     }
 
     @Test
-    public void shouldReadFileWithTenLines() throws IOException {
+    public void shouldExtractGetRenderingEventsFromLog() throws IOException {
         LogAnalyser logAnalyser = new LogAnalyser(path, documentCommand);
         List<String> logFile = logAnalyser.readLog();
 
-        Assertions.assertThat(logFile.size()).isEqualTo(10);
+        EventsExtractor eventsExtractor = new EventsExtractor(new GetEventBuilder());
+        eventsExtractor.process(logFile);
+        List<XEvent> xEvents = eventsExtractor.getEvents().get("1286373785873-3536");
+
+        Assertions.assertThat(xEvents.size()).isEqualTo(1);
+        Assertions.assertThat(xEvents.get(0).getType()).isEqualTo(XEvent.EventType.GET);
     }
 }

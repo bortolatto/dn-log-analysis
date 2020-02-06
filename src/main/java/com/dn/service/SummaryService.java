@@ -2,6 +2,7 @@ package com.dn.service;
 
 import com.dn.model.Rendering;
 import com.dn.model.Summary;
+import lombok.Getter;
 
 import java.util.List;
 import java.util.Map;
@@ -10,8 +11,11 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class SummaryService {
+    @Getter
     private final List<Rendering> renderingList;
+    @Getter
     private final Set<String> startRenderingUids;
+    @Getter
     private final Set<String> getRenderingUids;
 
     public SummaryService(List<Rendering> renderingList,
@@ -40,7 +44,8 @@ public class SummaryService {
     }
 
     private long getDuplicateRenderings() {
-        Map<Rendering, Long> counted = renderingList.stream()
+        Map<Rendering, Long> counted = renderingList
+                .stream()
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
         return counted.entrySet()
                 .stream()

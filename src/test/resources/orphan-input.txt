@@ -1,0 +1,6 @@
+2010-10-06 09:03:05,865 [WorkerThread-17] INFO  [ServerSession]: Processing command object: {arguments=[114466, 0], type=request, name=startRendering}
+2010-10-06 09:03:05,869 [WorkerThread-17] INFO  [ServiceProvider]: Executing request startRendering with arguments [114466, 0] on service object { ReflectionServiceObject -> com.dn.gaverzicht.dms.services.DocumentService@4a3a4a3a }
+2010-10-06 09:03:05,873 [WorkerThread-17] DEBUG [RenderingQueue]: Checking to add command to queue: { RenderingCommand - uid: 1286373785873-3536 }
+2010-10-06 09:03:05,873 [WorkerThread-17] DEBUG [RenderingQueue]: Adding command to queue: { RenderingCommand - uid: 1286373785873-3536 }
+2010-10-06 09:03:05,873 [WorkerThread-17] INFO  [ServiceProvider]: Service startRendering returned 1286373785873-3536
+2010-10-06 09:03:06,547 [WorkerThread-15] INFO  [ServerSession]: Processing command object: {arguments=[1286373785873-3536], type=request, name=getRendering}

@@ -4,7 +4,10 @@ import com.dn.model.EventBuilder;
 import com.dn.model.XEvent;
 import lombok.Getter;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class EventsExtractor {
     private final EventBuilder eventBuilder;
@@ -27,12 +30,5 @@ public class EventsExtractor {
             _events.add(event);
             events.put(event.getUid(), _events);
         }
-    }
-
-    public Optional<List<XEvent>> getEventsByUid(String uid) {
-        if (!events.containsKey(uid)) {
-            return Optional.empty();
-        }
-        return Optional.of(events.get(uid));
     }
 }

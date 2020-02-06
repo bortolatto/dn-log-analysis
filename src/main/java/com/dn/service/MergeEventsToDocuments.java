@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class PersistEventsToRenderings {
-    public void persist(List<Rendering> renderingList, Map<String, List<XEvent>> events) {
+public class MergeEventsToDocuments {
+    public void merge(List<Rendering> renderingList, Map<String, List<XEvent>> events) {
         renderingList.forEach(
                 rendering -> {
                     if (events.containsKey(rendering.getUid())) {

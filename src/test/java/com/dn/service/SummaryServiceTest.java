@@ -1,9 +1,9 @@
 package com.dn.service;
 
 import com.dn.commands.DocumentCommand;
+import com.dn.commands.GetEventBuilder;
 import com.dn.commands.StartingEventCommand;
-import com.dn.model.Document;
-import com.dn.model.Rendering;
+import com.dn.model.Summary;
 import org.assertj.core.api.Assertions;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -11,10 +11,11 @@ import org.junit.Test;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-public class LogAnalyserTest {
+public class SummaryServiceTest {
     private static DocumentCommand documentCommand;
     private static Path path;
 
@@ -27,22 +28,22 @@ public class LogAnalyserTest {
     }
 
     @Test
-    public void shouldHaveOneRendering() throws IOException {
+    public void shouldBuildSummaryWithOneEvent() throws IOException {
         LogAnalyser logAnalyser = new LogAnalyser(path, documentCommand);
         List<String> logFile = logAnalyser.readLog();
         logAnalyser.scan(logFile);
 
-        Document document = new Document(114466, 0, "WorkerThread-17");
-        Rendering rendering = new Rendering(document, "1286373785873-3536");
+        EventsExtractor eventsExtractor = new EventsExtractor(new GetEventBuilder());
+        eventsExtractor.process(logFile);
 
-        Assertions.assertThat(logAnalyser.getEventRenderings()).contains(rendering);
+        SummaryService summaryService = new SummaryService(logAnalyser.getEventRenderings(),
+                eventsExtractor.getEvents().keySet(),
+                Collections.emptySet());
+        Summary summary = summaryService.getSummary();
+
+        Assertions.assertThat(summary.getTotalRenderings()).isEqualTo(1);
+        Assertions.assertThat(summary.getDuplicateRenderings()).isEqualTo(0);
+        Assertions.assertThat(summary.getOrphanRenderings()).isEqualTo(1);
     }
 
-    @Test
-    public void shouldReadFileWithTenLines() throws IOException {
-        LogAnalyser logAnalyser = new LogAnalyser(path, documentCommand);
-        List<String> logFile = logAnalyser.readLog();
-
-        Assertions.assertThat(logFile.size()).isEqualTo(10);
-    }
 }
