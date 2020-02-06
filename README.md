@@ -1,6 +1,6 @@
 # Overview
 
-This tool is intended to analyze logs in an specific format and to extract several pieces of information from it, for instance how many events have occurred and the timestamps that it happened.
+This tool aims to analyze logs with an specific format and to extract several pieces of information from it, such as how many events have occurred and the timestamps that it happened.
 For testing purposes, please download file from http://debreuck.neirynck.com/opdracht/server.zip.
 
 # Pre requisites
@@ -15,7 +15,7 @@ mvn clean verify
 After that, you should see an artifact in target folder named log-analysis-1.0-SNAPSHOT.jar.
 
 # Testing the application
-Just call the application with the file log argument: 
+Just run the application with the file log argument: 
 ```
 java -jar log-analysis-1.0-SNAPSHOT.jar <filename> (without <> characters)
 ```
