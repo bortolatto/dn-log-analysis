@@ -8,7 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class GetEventBuilder implements EventBuilder {
-    private static final String REGEX = "^(?<occurredAt>.{23}).+\\s\\[(?<uid>\\d{13}-\\d+)\\]";
+    private static final String REGEX = "^(?<occurredAt>.{23}).+getRendering.+\\s\\[(?<uid>\\d{13}-\\d+)\\]";
     protected Pattern pattern;
     protected Matcher matcher;
 
